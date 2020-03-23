@@ -1,0 +1,73 @@
+{% extends 'orders/base.html' %}
+{% load static %}
+{% block title %}My orders{% endblock %}
+
+{% block body %}
+<div class="my-orders">
+  <h1>My orders</h1><hr>
+  <h3 class="centre">Active</h3>
+  <table class="table">
+    <thead class="thead-dark">
+      <tr>
+        <th>Order id</th>
+        <th>Time ordered</th>
+        <th class="items-col">Items</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody id='active'>
+      {% for order in my_orders %}
+        {% if order.status != 'delivered' %}
+      <tr class='expandable' id="{{order.id}}">
+        <td>{{order.id}}</td>
+        <td>{{order.time_date}}</td>
+        <td class="items-col">
+          {% for item in order.cart %}
+          {{item.dishType}} | {{item.dishTitle}} | Extras: {{item.extras}} | {{item.size}} | $ {{item.price}} x {{item.quantity}} <br>
+          {% endfor %}
+          TOTAL: $ {{order.cart_total}}
+        </td>
+        <td class='order-status'>{{order.status}}</td>
+      </tr>
+        {% endif %}
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <h3 class="centre">Completed</h3>
+
+  <table class="table">
+    <thead class="thead-dark">
+      <tr>
+        <th>Order id</th>
+        <th>Time ordered</th>
+        <th class="items-col">Items</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody id='completed'>
+      {% for order in my_orders%}
+        {% if order.status == 'delivered' %}
+      <tr class='expandable' id="{{order.id}}">
+        <td>{{order.id}}</td>
+        <td>{{order.time_date}}</td>
+        <td class="items-col">
+          {% for item in order.cart %}
+          {{item.dishType}} | {{item.dishTitle}} | Extras: {{item.extras}} | {{item.size}} | $ {{item.price}} x {{item.quantity}} <br>
+          {% endfor %}
+          TOTAL: $ {{order.cart_total}}
+        </td>
+        <td class='order-status'>{{order.status}}</td>
+      </tr>
+        {% endif %}
+      {% endfor %}
+    </tbody>
+  </table>
+
+</div>
+
+{% endblock %}
+
+{% block javascript %}
+<script src="{% static 'orders/js/my_orders.js' %}" charset="utf-8"></script>
+{% endblock javascript %}

@@ -1,0 +1,95 @@
+{% extends 'orders/base.html' %}
+{% load static %}
+{% block title %}Orders{% endblock %}
+
+{% block body %}
+<h1 class="centre">Orders</h1><hr><br>
+<h3 class="centre">Active</h3>
+<table class="table">
+  <thead class="thead-dark">
+    <tr>
+      <th>Order id</th>
+      <th>Time ordered</th>
+      <th>First name</th>
+      <th>Items</th>
+      <th>Status</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody id='active'>
+    {% for order in orders%}
+      {% if order.status != 'delivered' %}
+    <tr id="{{order.id}}">
+      <td>{{order.id}}</td>
+      <td>{{order.time_date}}</td>
+      <td>{{order.user_id.first_name}}</td>
+      <td>
+        {% for item in order.cart %}
+        {{item.dishType}} | {{item.dishTitle}} | Extras: {{item.extras}} | {{item.size}} | $ {{item.price}} x {{item.quantity}} <br>
+        {% endfor %}
+        TOTAL: $ {{order.cart_total}}
+      </td>
+      <td class='order-status'>{{order.status}}</td>
+      <td>
+        <select class="status" name="status">
+          <option value="received">Received</option>
+          <option value="cooking">Cooking</option>
+          <option value="en-route">En-route</option>
+          <option value="delivered">Delivered</option>
+        </select>
+        <button type="button" class="update-btn">Update</button>
+      </td>
+    </tr>
+      {% endif %}
+    {% endfor %}
+  </tbody>
+</table>
+
+<h3 class="centre">Completed</h3>
+
+<table class="table">
+  <thead class="thead-dark">
+    <tr>
+      <th>Order id</th>
+      <th>Time ordered</th>
+      <th>First name</th>
+      <th>Items</th>
+      <th>Status</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody id='completed'>
+    {% for order in orders%}
+      {% if order.status == 'delivered' %}
+    <tr id="{{order.id}}">
+      <td>{{order.id}}</td>
+      <td>{{order.time_date}}</td>
+      <td>{{order.user_id.first_name}}</td>
+      <td>
+        {% for item in order.cart %}
+        {{item.dishType}} | {{item.dishTitle}} | Extras: {{item.extras}} | {{item.size}} | $ {{item.price}} x {{item.quantity}} <br>
+        {% endfor %}
+        TOTAL: $ {{order.cart_total}}
+      </td>
+      <td class='order-status'>{{order.status}}</td>
+      <td>
+        <select class="status" name="status">
+          <option value="received">Received</option>
+          <option value="cooking">Cooking</option>
+          <option value="en-route">En-route</option>
+          <option value="delivered">Delivered</option>
+          <option value="cancelled">Cancelled</option>
+        </select>
+        <button type="button" class="update-btn">Update</button>
+      </td>
+    </tr>
+      {% endif %}
+    {% endfor %}
+  </tbody>
+</table>
+
+{% endblock %}
+
+{% block javascript %}
+  <script src="{% static 'orders/js/view_orders.js' %}" charset="utf-8"></script>
+{% endblock javascript %}

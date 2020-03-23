@@ -1,0 +1,35 @@
+{% extends 'orders/base.html' %}
+
+{% block title %}Checkout{% endblock %}
+
+{% block body %}
+
+<div id="checkout-cart">
+  <h1>Checkout</h1><hr>
+  {% for item in cart %}
+  <div class="checkout-cart-item">
+    <h3>{{item.dishType}}</h3>
+    <h4>{{item.dishTitle}}</h4>
+    <h6>{{item.extras}}</h6>
+    <h6>{{item.size}}</h6>
+    <h4>$ {{item.price}} x {{item.quantity}}<span class="cart-item-total">$ {{item.total}}</span></h4>
+  </div>
+  {% endfor %}
+</div>
+<div id="checkout-total">
+  $ {{cartTotal}}
+</div>
+<div id="checkout-btns">
+  <form  action="{% url 'index' %}" method="get">
+    <button class="edit" type="submit" id="edit-order">Back to menu</button>
+  </form>
+  <form  action="{% url 'checkout' %}" method="post">
+    {% csrf_token %}
+    <button class="order" type="submit" id="edit-order">Place order</button>
+  </form>
+</div>
+
+{% endblock %}
+
+{% block javascript %}
+{% endblock javascript %}

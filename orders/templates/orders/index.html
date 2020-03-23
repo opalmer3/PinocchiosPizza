@@ -1,0 +1,241 @@
+{% extends 'orders/base.html' %}
+{% load static %}
+{% block title %}{% endblock %}
+
+{% block body %}
+<div id="menu">
+  <div class="row">
+    <div class="col-lg-10">
+      <div class="menu-section" id="reg">
+        <h2 class="section-title">Regular Pizza</h2>
+        <ul>
+          <li>
+            <img class="food-picture" src="{% static 'orders/pizza.svg' %}" alt="Pizza">
+            <span class="food-info">
+              <h3>Create Your Own! (Add up to 5 toppings)</h3>
+              <p class="pizza-description">
+                {% for pizza in regpizza %}
+                  {{pizza.name}}: Small ${{pizza.small_price}}, Large ${{pizza.large_price}}  |
+                {% endfor %}
+              </p>
+              <div class="topping-box">
+                {% for topping in toppings %}
+                <button data-selected="false" data-topping="{{topping.name}}" class="topping">{{topping.name}}</button>
+                {% endfor %}
+              </div>
+              <div class="price">
+                <span id="regsize" class="size">
+                  <button data-size="Small" data-selected="false" id="regsmallbtn" class="pricebtn">Small ${{regpizza.0.small_price}}</button>
+                  <button data-size="Large" data-selected="false" id="reglargebtn" class="pricebtn">Large ${{regpizza.0.large_price}}</button>
+                </span>
+                <button data-section="regularPizzas" data-dish-type="Regular Pizza" data-id={{regpizza.0.id}} id="regaddcart" class="addcartbtn">Add To Cart</button>
+              </div>
+            </span>
+
+          </li>
+        </ul>
+      </div>
+      <div class="menu-section" id="sic">
+        <h2 class="section-title">Sicilian Pizza</h2>
+        <ul>
+          <li>
+            <img class="food-picture" src="{% static 'orders/pizza.svg' %}" alt="Pizza">
+            <span class="food-info">
+              <h3>Create Your Own! (Add up to 5 toppings)</h3>
+              <p class="pizza-description">
+                {% for pizza in sicpizza %}
+                <span id="sic{{pizza.id}}" data-small="{{pizza.small_price}}" data-large="{{pizza.large_price}}" class="pizza-price-list">{{pizza.name}}: Small ${{pizza.small_price}}, Large ${{pizza.large_price}}</span>
+                {% endfor %}
+              </p>
+              <div class="topping-box">
+                {% for topping in toppings %}
+                <button data-selected="false" data-topping="{{topping.name}}" class="topping">{{topping.name}}</button>
+                {% endfor %}
+              </div>
+              <div class="price">
+                <span id="sicsize" class="size">
+                  <button data-size="Small" data-selected="false" id="sicsmallbtn" class="pricebtn">Small ${{sicpizza.0.small_price}}</button>
+                  <button data-size="Large" data-selected="false" id="siclargebtn" class="pricebtn">Large ${{sicpizza.0.large_price}}</button>
+                </span>
+                <button data-section="sicilianPizzas" data-dish-type="Sicilian Pizza" data-id={{sicpizza.0.id}} id="sicaddcart" class="addcartbtn">Add To Cart</button>
+              </div>
+            </span>
+          </li>
+        </ul>
+      </div>
+
+      <div class="menu-section" id="subs">
+        <h2 class="section-title">Subs</h2>
+        <ul>
+          {% for sub in subs%}
+          <li id="subs{{sub.id}}">
+            <img class="food-picture" src="{% static 'orders/sub.svg' %}" alt="sub">
+            <span class="food-info">
+              <h3>{{sub.name}}</h3>
+              <div class="extra-box">
+                {% if sub.name != 'Steak & Cheese'%}
+                <button data-id="{{sub.id}}" data-selected="false" data-extra="{{extras.0.name}}" class="extra">{{extras.0.name}}</button>
+                {% else %}
+                {% for extra in extras %}
+                <button data-id="{{sub.id}}" data-selected="false" data-extra="{{extra.name}}" class="extra">{{extra.name}}</button>
+                {% endfor %}
+                {% endif %}
+
+              </div>
+              <div class="price">
+                <span id="subsize" class="size">
+                  {% if sub.small_price == 0 %}
+                    <button  data-selected="false" class="pricebtn sml" style="visibility: hidden;">Small not availble</button>
+                  {% else %}
+                      <button data-size="Small" data-selected="false" class="pricebtn sml">Small ${{sub.small_price}}</button>
+                  {% endif %}
+                  <button data-size="Large" data-selected="false" class="pricebtn lrg">Large ${{sub.large_price}}</button>
+                </span>
+                <button data-section="subs" data-dish-type="Sub" data-id="{{sub.id}}" class="addcartbtn">Add To Cart</button>
+              </div>
+            </span>
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
+
+      <div class="menu-section" id="pasta">
+        <h2 class="section-title">Pasta</h2>
+        <ul>
+          {% for p in pasta %}
+          <li id="pasta{{p.id}}">
+            <img class="food-picture" src="{% static 'orders/pasta.svg' %}" alt="Pasta">
+            <span class="food-info">
+              <h3>{{p.name}}</h3>
+              <div class="price">
+                <span class="size">
+                  <button data-selected="true" class="pricebtn selected">${{p.price}}</button>
+                </span>
+                <button data-section="pasta" data-dish-type="Pasta" data-id="{{p.id}}" class="addcartbtn">Add To Cart</button>
+              </div>
+            </span>
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
+
+      <div class="menu-section" id="salad">
+        <h2 class="section-title">Salad</h2>
+        <ul>
+          {% for s in salad %}
+          <li id="salad{{s.id}}">
+            <img class="food-picture" src="{% static 'orders/salad.svg' %}" alt="Salad">
+            <span class="food-info">
+              <h3>{{s.name}}</h3>
+              <div class="price">
+                <span class="size">
+                  <button data-selected="true" class="pricebtn selected">${{s.price}}</button>
+                </span>
+                <button data-section="salad" data-dish-type="Salad" data-id="{{s.id}}" class="addcartbtn">Add To Cart</button>
+              </div>
+            </span>
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
+
+      <div class="menu-section" id="platters">
+        <h2 class="section-title">Platters</h2>
+        <ul>
+          {% for platter in platters %}
+          <li id="platters{{platter.id}}">
+            <img class="food-picture" src="{% static 'orders/platter.svg' %}" alt="Platter">
+            <span class="food-info">
+              <h3>{{platter.name}}</h3>
+              <div class="price">
+                <span id="plattersize" class="size">
+                  <button data-size="Small" data-selected="false" class="pricebtn sml">Small ${{platter.small_price}}</button>
+                  <button data-size="Large" data-selected="false" class="pricebtn lrg">Large ${{platter.large_price}}</button>
+                </span>
+                <button data-section="platters" data-dish-type="Platter" data-id="{{platter.id}}" class="addcartbtn">Add To Cart</button>
+              </div>
+            </span>
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
+
+    </div>
+    <div class="cart-col col-lg-2">
+      <div class="cart-container">
+        <h3>Cart</h3>
+        <div class="cart-contents">
+          <ol>
+
+          </ol>
+        </div>
+        <div class="cart-total">
+          <h4>Total: $0.00</h4>
+        </div>
+        <form action="{% url 'checkout' %}" method="get">
+          <button type="submit"  disabled class="checkout checkout-btn">Checkout</button>
+        </form>
+      </div>
+
+    </div>
+  </div>
+
+
+</div>
+{% endblock %}
+
+{% block javascript %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.min.js"></script>
+
+{% verbatim %}
+<!-- Template for cart items -->
+<script id="cartItemTemplate" type="text/template">
+  <li class="cart-item">
+    <h5>{{dishTitle}} {{dishType}}</h5>
+    <div>{{extras}}</div>
+    <div>{{size}}</div>
+    <div>${{price}}<span class='plus-minus-container'><button class="plus-minus-btn">-</button><span>{{quantity}}</span><button class="plus-minus-btn">+</button></span></div>
+    <h5>{{total}}</h5>
+  </li>
+</script>
+
+{% endverbatim %}
+
+<script src="{% static 'orders/js/index.js' %}" charset="utf-8"></script>
+
+<script type="text/javascript">
+  // List for each menu section to be populated with dicts containing item id, name, prices
+  var regularPizzas = []
+  var sicilianPizzas = []
+  var subs = []
+  var pasta = []
+  var salad = []
+  var platters = []
+
+  // Add all menu items to list based on menu section
+function saveMenu(){
+  {% for pizza in regpizza %}
+    regularPizzas.push({'id': {{pizza.id}}, 'dishTitle': '{{pizza.name}}', 'smallPrice': {{pizza.small_price}}, 'largePrice': {{pizza.large_price}} });
+  {% endfor %}
+  {% for pizza in sicpizza %}
+    sicilianPizzas.push({'id': {{pizza.id}}, 'dishTitle': '{{pizza.name}}', 'smallPrice': {{pizza.small_price}}, 'largePrice': {{pizza.large_price}} });
+  {% endfor %}
+  {% for sub in subs %}
+    subs.push({'id': {{sub.id}}, 'dishTitle': '{{sub.name}}', 'smallPrice': {{sub.small_price}}, 'largePrice': {{sub.large_price}} });
+  {% endfor %}
+  {% for platter in platters %}
+    platters.push({'id': {{platter.id}}, 'dishTitle': '{{platter.name}}', 'smallPrice': {{platter.small_price}}, 'largePrice': {{platter.large_price}} });
+  {% endfor %}
+  {% for p in pasta %}
+    pasta.push({'id': {{p.id}}, 'dishTitle': '{{p.name}}', 'price': {{p.price}} });
+  {% endfor %}
+  {% for s in salad %}
+    salad.push({'id': {{s.id}}, 'dishTitle': '{{s.name}}', 'price': {{s.price}} });
+  {% endfor %}
+}
+
+saveMenu();
+
+</script>
+
+{% endblock javascript %}

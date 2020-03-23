@@ -1,0 +1,19 @@
+{% extends 'orders/base.html' %}
+{% load static %}
+{% block title %}{% endblock %}
+
+{% block body %}
+<div class="login-register-box">
+  <h1>Log In</h1>
+  <form action="login?next={{ request.GET.next }}" method="post">
+    {% csrf_token %}
+    <input type="text" name="username" placeholder="Username">
+    <input type="password" name="password" placeholder="Password">
+    <button type="submit">Log in</button>
+  </form>
+</div>
+{% endblock %}
+
+{% block javascript %}
+<script src="{% static 'orders/js/login-register.js' %}" charset="utf-8"></script>
+{% endblock javascript %}

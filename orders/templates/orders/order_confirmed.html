@@ -1,0 +1,19 @@
+{% extends 'orders/base.html' %}
+
+{% block title %}It's in the oven!{% endblock %}
+
+{% block body %}
+<div class="order-confirmation">
+  <h1>Order Confirmed</h1>
+  <h3>Order id: {{order_id}}</h3>
+  <hr>
+  <p>Your order is in the kitchen and will be on its way to you shortly!
+    If you have any problems with your order contact us on <b>18843472905</b></p>  
+</div>
+
+
+
+{% endblock %}
+
+{% block javascript %}
+{% endblock javascript %}
