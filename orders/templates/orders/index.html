@@ -1,6 +1,6 @@
 {% extends 'orders/base.html' %}
 {% load static %}
-{% block title %}{% endblock %}
+{% block title %} - Menu{% endblock %}
 
 {% block body %}
 <div id="menu">
@@ -194,7 +194,7 @@
     <h5>{{dishTitle}} {{dishType}}</h5>
     <div>{{extras}}</div>
     <div>{{size}}</div>
-    <div>${{price}}<span class='plus-minus-container'><button class="plus-minus-btn">-</button><span>{{quantity}}</span><button class="plus-minus-btn">+</button></span></div>
+    <div>${{price}}<span class='plus-minus-container'><button class="plus-minus-btn" data-btn="-">-</button><span>{{quantity}}</span><button class="plus-minus-btn" data-btn="+">+</button></span></div>
     <h5>{{total}}</h5>
   </li>
 </script>

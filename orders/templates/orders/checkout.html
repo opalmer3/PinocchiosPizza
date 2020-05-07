@@ -1,21 +1,27 @@
 {% extends 'orders/base.html' %}
 
-{% block title %}Checkout{% endblock %}
+{% block title %} - Checkout{% endblock %}
 
 {% block body %}
 
 <div id="checkout-cart">
   <h1>Checkout</h1><hr>
+  {% if cartTotal == 0%}
+    <div class="empty-cart">
+      Your cart is empty, head back to the menu and add some food to your cart!
+    </div>
+  {% else %}
   {% for item in cart %}
-  <div class="checkout-cart-item">
-    <h3>{{item.dishType}}</h3>
-    <h4>{{item.dishTitle}}</h4>
-    <h6>{{item.extras}}</h6>
-    <h6>{{item.size}}</h6>
-    <h4>$ {{item.price}} x {{item.quantity}}<span class="cart-item-total">$ {{item.total}}</span></h4>
+    <div class="checkout-cart-item">
+      <h3>{{item.dishType}}</h3>
+      <h4>{{item.dishTitle}}</h4>
+      <h6>{{item.extras}}</h6>
+      <h6>{{item.size}}</h6>
+      <h4>$ {{item.price}} x {{item.quantity}}<span class="cart-item-total">$ {{item.total}}</span></h4>
+    </div>
+    {% endfor %}
   </div>
-  {% endfor %}
-</div>
+  {% endif %}
 <div id="checkout-total">
   $ {{cartTotal}}
 </div>
@@ -25,7 +31,9 @@
   </form>
   <form  action="{% url 'checkout' %}" method="post">
     {% csrf_token %}
-    <button class="order" type="submit" id="edit-order">Place order</button>
+    {% if cartTotal != 0 %}
+      <button class="order" type="submit" id="edit-order">Place order</button>
+    {% endif %}
   </form>
 </div>
 

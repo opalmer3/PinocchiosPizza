@@ -1,84 +1,97 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <!-- documentation at http://getbootstrap.com/docs/4.1/, alternative themes at https://bootswatch.com/ -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <link rel="stylesheet" href="{% static 'orders/styles.css' %}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- documentation at http://getbootstrap.com/docs/4.1/, alternative themes at https://bootswatch.com/ -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  <link rel="stylesheet" href="{% static 'orders/styles.css' %}">
   <!-- fonts -->
-    <link href="https://fonts.googleapis.com/css?family=Gotu|Viaoda+Libre|Roboto:300,400,500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Gotu|Viaoda+Libre|Roboto:300,400,500&display=swap" rel="stylesheet">
 
-    <title>{% block title %}{% endblock %}</title>
-  </head>
-  <body>
-    <nav class="navbar navbar-expand-lg">
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon navbar-dark"></span>
+  <title>Pinocchio's{% block title %}{% endblock %}</title>
+</head>
+
+<body>
+  <nav>
+
+
+    <div class="logo">
+      <button class="navbar-toggler">
+        <span class="navbar-toggler-icon"></span>
       </button>
-      <span class="logo"><h1>Pinocchio's</h1></span>
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <a class="navlink nav-left" href="{% url 'index' %}">Home</a>
-        <span class="nav-right ml-auto">
-          {% if user.is_authenticated %}
-            <a class="navlink" href="/my_orders">My orders</a>
-            <a class="navlink" href="/logout">Log Out</a>
-          {% else %}
-
-            <a class="navlink" href="{% url 'login'%}">Log In</a>
-            <a class="navlink" href="{% url 'register' %}">Register</a>
-          {% endif %}
-        </span>
-      </div>
-      {% if index %}
-    <img id='shopping-cart'src="{% static 'orders/shopping-cart.svg'%}" alt="Cart">
-  {% endif %}
-    </nav>
-    <!-- collapsable shopping cart -->
-
-    <div class="ml-auto" id="collapsable-cart-content">
-      <div id='collapsable-cart-container'class="cart-container">
-        <h3>Cart</h3>
-        <div class="cart-contents">
-          <ol>
-
-          </ol>
-        </div>
-        <div class="cart-total">
-          <h4>Total: $0.00</h4>
-        </div>
-        <form action="{% url 'checkout' %}" method="get">
-          <button type="submit" disabled class="checkout checkout-btn">Checkout</button>
-        </form>
-      </div>
-      <div id='closebtn'>
-        <img class='up-arrow' src="{% static 'orders/up.svg'%}" alt="Close cart">
-      </div>
+      <h1>Pinocchio's</h1>
     </div>
 
-    <div class="container-fluid">
-      {% block body %}
-      {% endblock %}
+    <div class="home" data-visibility="hidden">
+      <a class="navlink nav-left" href="{% url 'index' %}">Home</a>
     </div>
 
-    <!-- Link js  -->
-    <script src="{% static 'orders/js/jquery-3.4.1.js' %}"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    <div class="nav-right">
+      {% if user.is_authenticated %}
+      <a class="navlink" href="/my_orders">My orders</a>
+      <a class="navlink" href="/logout">Log Out</a>
+      {% else %}
 
-    {% block javascript %}
+      <a class="navlink" href="{% url 'login'%}">Log In</a>
+      <a class="navlink" href="{% url 'register' %}">Register</a>
+      {% endif %}
+    </div>
 
-    {% endblock javascript %}
-    <noscript>
-      <style type="text/css">
-        .container-fluid {
-          display: none;
-        }
-      </style>
-      This website requires Javascript to run. Please enaable it and try again.
-    </noscript>
-  </body>
+    {% if index %}
+    <img id='shopping-cart' src="{% static 'orders/shopping-cart.svg'%}" alt="Cart">
+    {% endif %}
+  </nav>
+  <!-- collapsable shopping cart -->
+
+  <div class="ml-auto" id="collapsable-cart-content">
+    <div id='collapsable-cart-container' class="cart-container">
+      <h3>Cart</h3>
+      <div class="cart-contents">
+        <ol>
+
+        </ol>
+      </div>
+      <div class="cart-total">
+        <h4>Total: $0.00</h4>
+      </div>
+      <form action="{% url 'checkout' %}" method="get">
+        <button type="submit" disabled class="checkout checkout-btn">Checkout</button>
+      </form>
+    </div>
+    <div id='closebtn'>
+      <img class='up-arrow' src="{% static 'orders/up.svg'%}" alt="Close cart">
+    </div>
+  </div>
+
+  <div class="container-fluid">
+    {% block body %}
+    {% endblock %}
+  </div>
+
+  <!-- Link js  -->
+  <script src="{% static 'orders/js/jquery-3.4.1.js' %}"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+
+  <script src="{% static 'orders/js/base.js' %}" charset="utf-8"></script>
+
+</script>
+  {% block javascript %}
+
+  {% endblock javascript %}
+  <noscript>
+    <style type="text/css">
+      .container-fluid {
+        display: none;
+      }
+    </style>
+    This website requires Javascript to run. Please enaable it and try again.
+  </noscript>
+</body>
+
 </html>

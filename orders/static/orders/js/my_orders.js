@@ -1,25 +1,29 @@
+// get screen width
 var width = window.innerWidth;
 
+// on smaller screens call resize smaller
 if (width < 992){
   resizeSmaller();
 }
 
+// Listen for winsow resize
 window.addEventListener('resize', resizeSmaller);
 
+// Collapses table on small screens
 function resizeSmaller(){
   // Get screen width
   var width = window.innerWidth;
 
   if (width < 992){
-    // Select 3rd col of each table body row
+    // Select 3rd col of each table body row containing ordered items
     $('tbody tr td:nth-child(3)').each(function(){
       // create new tr that spans full width of table
-      var rowId = $(this).parent().attr('id')
+      var rowId = $(this).parent().attr('id');
       var tr = document.createElement('tr');
       var td = document.createElement('td');
       td.setAttribute('colspan', '4');
       tr.style.display =  'none';
-      tr.setAttribute('class', 'expanded')
+      tr.setAttribute('class', 'expanded');
 
       td.innerHTML = '<h3>Items</h3>' + $(this).html();
 
@@ -31,7 +35,7 @@ function resizeSmaller(){
       $('#' + rowId + ' .items-col').remove();
     });
 
-    //Add + icon to 2nd column
+    //Add + icon to 2nd column to show it can be expanded
     $('tbody tr td:nth-child(2)').each(function(){
       $(this).append('<br>+');
     });
@@ -50,6 +54,7 @@ function resizeSmaller(){
   }
 }
 
+// Uncollapse the table back to its large screen format
 function resizeLarger(){
   // Get screen width
   var width = window.innerWidth;

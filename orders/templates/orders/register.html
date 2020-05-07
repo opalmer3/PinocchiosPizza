@@ -1,21 +1,23 @@
 {% extends 'orders/base.html' %}
 {% load static %}
-{% block title %}{% endblock %}
+{% block title %} - Register{% endblock %}
 
 {% block body %}
-<div class="login-register-box">
-  <h1>Register</h1>
-  <form action="register" method="post">
-    {% csrf_token %}
-    <input type="text" name="firstname" placeholder="First name">
-    <input type="text" name="lastname" placeholder="Last name">
-    <input type="text" name="username" placeholder="Username">
-    <input type="email" name="email">
-    <input type="password" name="password">
-    <input type="password" name="confirmation">
-    <button type="submit">Register</button>
-  </form>
-  {{message}}
+<div class="login-register-container">
+  <div class="login-register-box">
+    <h1>Register</h1>
+    <form id="login-register" action="register" method="post">
+      {% csrf_token %}
+      <input type="text" name="firstname" placeholder="First name">
+      <input type="text" name="lastname" placeholder="Last name">
+      <input type="text" name="username" placeholder="Username">
+      <input type="email" name="email" placeholder="Email">
+      <input type="password" name="password" placeholder="Password">
+      <input type="password" name="confirmation" placeholder="Password again">
+      <button type="submit">Register</button>
+    </form>
+    {{message}}
+  </div>
 </div>
 {% endblock %}
 

@@ -7,6 +7,7 @@ from django.urls import reverse
 
 import datetime
 import json
+import time
 
 from orders.models import *
 
@@ -14,33 +15,31 @@ from orders.models import *
 def index(request):
     # Get prices and menu items from db. Format prices to 2 decimal places
     regpizza = RegularPizza.objects.all()
-    for pizza in regpizza:
-        pizza.small_price = "{:.2f}".format(pizza.small_price)
-        pizza.large_price = "{:.2f}".format(pizza.large_price)
-
     sicpizza = SicilianPizza.objects.all()
-    for pizza in sicpizza:
-        pizza.small_price = "{:.2f}".format(pizza.small_price)
-        pizza.large_price = "{:.2f}".format(pizza.large_price)
-
     subs = Subs.objects.all()
+    platters = Platters.objects.all()
+    pasta = Pasta.objects.all()
+    salad = Salad.objects.all()
+
+    # create list for the items that have both a small and large size and those that have only one size
+    small_large = [regpizza, sicpizza, platters]
+    one_size = [pasta, salad]
+
+    # iterate over each item and change format to 2 decimal places
+    for section in small_large:
+        for item in section:
+            item.small_price = "{:.2f}".format(item.small_price)
+            item.large_price = "{:.2f}".format(item.large_price)
+
+    for section in one_size:
+        for item in section:
+            item.price = "{:.2f}".format(item.price)
+
+    # subs may or may not have a small size
     for sub in subs:
         if sub.small_price:
             sub.small_price = "{:.2f}".format(sub.small_price)
         sub.large_price = "{:.2f}".format(sub.large_price)
-
-    platters = Platters.objects.all()
-    for platter in platters:
-        platter.small_price = "{:.2f}".format(platter.small_price)
-        platter.large_price = "{:.2f}".format(platter.large_price)
-
-    pasta = Pasta.objects.all()
-    for p in pasta:
-        p.price = "{:.2f}".format(p.price)
-
-    salad = Salad.objects.all()
-    for s in salad:
-        s.price = "{:.2f}".format(s.price)
 
     context = {"regpizza": regpizza,
         "sicpizza": sicpizza,
@@ -56,7 +55,9 @@ def index(request):
     return render(request, "orders/index.html", context)
 
 def register(request):
+    # if request method is post then form has been submitted
     if request.method == "POST":
+        # Create dict and add inputs
         info = {}
         info['firstname'] = request.POST["firstname"]
         info['lastname'] = request.POST["lastname"]
@@ -65,10 +66,13 @@ def register(request):
         info['password'] = request.POST["password"]
         info['confirmation'] = request.POST["confirmation"]
 
+        # iterate through each key. If the value is empty then user has not filled in all fields.
         for key in info:
             if not info[key]:
+                # Re-render page with error message
                 return render(request, "orders/register.html", {"message": 'Please fill all fields'})
 
+        # Check username and email not already in use. Check passwords match
         if User.objects.filter(username=info['username']).exists():
              return render(request, "orders/register.html", {"message": 'There already exists an account with this username'})
 
@@ -78,34 +82,49 @@ def register(request):
         if info['password'] != info['confirmation']:
             return render(request, "orders/register.html", {"message": 'Passwords do not match'})
 
+        # Create new user if checks passed
         user = User.objects.create_user(info['username'], info['email'], info['password'])
 
+        # Add first and last name to user object
         user.first_name = info['firstname']
         user.last_name = info['lastname']
 
+        # Commit to database
         user.save()
 
+        # Redirect to login page
         return HttpResponseRedirect(reverse("login"))
+
+    # User arrive via get request
     else:
         return render(request, "orders/register.html")
 
 
-
+# User redirected to login page if not logged in
 @login_required(login_url='login')
 def checkout(request):
     # If get request user arrived here from checkout page, render the cart
     if request.method == 'GET':
-        cart = request.session['cart']
+        # Get cart object
+        try:
+            cart = request.session['cart']
+            # returns a dict containing a list of cart items and total price
+            new_cart = get_prices_cart_total(cart)
 
-        new_cart = get_prices_cart_total(cart)
+            cart = new_cart['cart']
+            cartTotal = new_cart['cart_total']
 
-        cart = new_cart['cart']
-        cartTotal = new_cart['cart_total']
+            context = {"cart": cart,
+                        "cartTotal": cartTotal
+            }
 
-        context = {"cart": cart,
-                    "cartTotal": cartTotal
-        }
-        return render(request, "orders/checkout.html", context)
+            return render(request, "orders/checkout.html", context)
+        # If there is no session object called cart then exception will occur. user must not have visited menu page, cart must be empty
+        except:
+            context = {"cart": [],
+                        "cartTotal": 0,
+            }
+            return render(request, "orders/checkout.html", context)
 
     # User arrived here by clicking place order, process the order
     else:
@@ -116,6 +135,7 @@ def checkout(request):
             cart = json.dumps(request.session['cart'])
             status = 'received'
 
+            # Create new order object and save to orders table
             order = Orders(user_id=user, time_date=date_now,cart=cart, status=status)
             order.save()
 
@@ -137,6 +157,7 @@ def checkout(request):
 def order_confirmed(request, order_id):
     order = Orders.objects.get(pk=order_id)
 
+    # if user id doesnt match the order id or there is no matching order send order invalid message
     if order is None or order.user_id.id != request.session['user_id']:
         message = 'Order id invalid'
         context = {
@@ -144,19 +165,18 @@ def order_confirmed(request, order_id):
         }
         return render(request, "orders/error.html", context)
 
-    user = User.objects.get(pk=request.session['user_id'])
     context = {
     'order_id': order_id,
-    'user': user
     }
 
     return render(request, "orders/order_confirmed.html", context)
 
 @login_required(login_url='login')
 def my_orders(request):
+    # Get all orders made by the user in descending time date order
     my_orders = Orders.objects.filter(user_id=request.user).all().order_by('-time_date')
 
-    #decode order column
+    #decode cart from string to dict
     for order in my_orders:
         order.cart = json.loads(order.cart)
         new_cart = get_prices_cart_total(order.cart)
@@ -178,16 +198,18 @@ def login_user(request):
 
         user = authenticate(request, username=username, password=password)
 
+        # if user authenticated then log them in
         if user is not None:
             login(request, user)
             request.session['user_id'] = user.id
 
-            # if user needs to be redirect to another url then save it
-            if request.GET.get('next') != '':
+            # if user needs to be redirected then send them to that view
+            if request.GET.get('next'):
                 next = request.GET.get('next')
                 return HttpResponseRedirect(next)
             else:
                 return HttpResponseRedirect(reverse('index'))
+        # Else invalid credentials entered
         else:
             return render(request, "orders/login.html", {"message": 'Incorrect username or password'})
 
@@ -198,7 +220,7 @@ def logout_user(request):
     logout(request)
     return HttpResponseRedirect(reverse("login"))
 
-
+# Updates the cart session variable
 def update_cart(request):
     #Convert cart from json string format to python list
     cart = json.loads(request.GET.get('cart'))
@@ -208,6 +230,7 @@ def update_cart(request):
 
     return JsonResponse({"success": True})
 
+# Looks up the cart session variable
 def get_cart(request):
     # Get cart variable from session if it exists and respond to ajax request
     try:
@@ -217,22 +240,24 @@ def get_cart(request):
     except:
         return JsonResponse({"cart": False})
 
+# Updates the status of customer orders
 def update_status(request):
     status = request.GET.get('status')
 
+    # Change status property
     order = Orders.objects.get(pk=request.GET.get('orderId'))
     order.status = status
     order.save()
 
     return JsonResponse({'status': status, 'orderId': str(request.GET.get('orderId'))})
 
-# Show all orders, only allow access to superusers
+# Show all orders, only allow access to staff members
 @login_required(login_url='login')
 def view_orders(request):
     if request.user.is_staff:
         orders = Orders.objects.all().order_by('-id')
 
-        #decode order column
+        #decode cart property
         for order in orders:
             order.cart = json.loads(order.cart)
             new_cart = get_prices_cart_total(order.cart)
@@ -251,7 +276,7 @@ def get_prices_cart_total(cart):
     cartTotal = 0
     # iterate through cart
     for item in cart:
-        # select the correct section list
+        # select the correct table
         section_list = get_db_objects(item['sectionList'])
 
         # iterate through objects in section list
@@ -260,6 +285,7 @@ def get_prices_cart_total(cart):
             id = str(i.id)
             if (id == item['id']):
                 item['dishTitle'] = i.name
+                # Pasta and salad have only one size/price
                 if item['dishType'] == 'Pasta' or item['dishType'] == 'Salad':
                     item['price'] = i.price
                 else:
@@ -274,13 +300,14 @@ def get_prices_cart_total(cart):
                 item['price'] = "{:.2f}".format(item['price'])
                 item['total'] = "{:.2f}".format(item['total'])
 
+                # When item found break out of the loop
                 break
 
     cartTotal = "{:.2f}".format(cartTotal)
 
     return {'cart': cart, 'cart_total': cartTotal}
 
-# returns all objects from the db based on dish type
+# returns all objects from the correct table based on dish type
 def get_db_objects(dishType):
     objects = {'regularPizzas': RegularPizza.objects.all(),
                 'sicilianPizzas': SicilianPizza.objects.all(),

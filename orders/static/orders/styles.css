@@ -1,56 +1,64 @@
 html, body {
   height: 100%;
-  font-family: 'Roboto',sans-serif;
+  font-family: 'Roboto', sans-serif;
 }
-button{
+
+.container-fluid {
+  padding-top: 20px;
+  height: 100%;
+}
+
+button {
   font-family: 'Gobu', sans-serif;
   font-weight: 300;
 }
+
 nav {
   background-color: #75daad;
   color: white;
-  padding-top: 10px;
-  margin-bottom: 30px;
-  padding-bottom: 0;
+  display: flex;
+  padding: 0 5%;
 }
 
-.nav-left{
-position: absolute;
-left: 10px;
+.home, .nav-right, .logo {
+  flex: 1;
+  margin: auto;
 }
-.nav-right{
-position: absolute;
-right: 20px;
+
+.home {
+  order: 1;
+}
+
+.nav-right {
+  order: 3;
+  text-align: right;
+}
+
+.logo {
+  order: 2;
+  text-align: center;
+}
+
+.logo h1 {
+  font-family: 'Viaoda Libre', cursive;
+  font-size: 3.5rem;
 }
 
 .navbar-toggler {
-position: absolute;
-left: 20px;
-top: 25px;
+  display: none;
 }
 
 .navbar-toggler-icon {
   background-image: url(/static/orders/menu.svg);
 }
+
 .navbar-toggler-icon:focus {
-outline-color: white;
+  outline-color: white;
 }
 
-.cart-toggler-icon{
+.cart-toggler-icon {
   background-image: url(/static/orders/shopping-cart.svg);
   height: 50px;
-}
-
-nav .logo{
-  width: 100%;
-    display: block;
-    margin: 0 auto;
-}
-
-.logo h1{
-  font-family: 'Viaoda Libre', cursive;
-  font-size: 3.5rem;
-  text-align: center;
 }
 
 .navlink {
@@ -66,46 +74,51 @@ nav .logo{
   text-decoration: none;
 }
 
-#shopping-cart{
+#shopping-cart {
   display: none;
   position: absolute;
-  right:10px;
+  top: 20px;
+  right: 3%;
   height: 50px;
 }
 
-#collapsable-cart-content{
+#collapsable-cart-content {
   display: none;
-width: 300px;
-position: fixed;
-background-color: inherit;
-z-index: 100;
-top:0;
-right:0;
+  width: 300px;
+  position: fixed;
+  background-color: inherit;
+  z-index: 100;
+  top: 0;
+  right: 0;
 }
 
-#collapsable-cart-container{
+#collapsable-cart-container {
   max-height: 450px;
   overflow-y: scroll;
 }
 
-#collapsable-cart-content ol{
-list-style-type: none;
-padding-left: 0;
+#collapsable-cart-content ol {
+  list-style-type: none;
+  padding-left: 0;
 }
-#collapsable-cart-content h5{
+
+#collapsable-cart-content h5 {
   margin-bottom: 0;
   margin-top: 3px;
   font-weight: 400;
   font-size: 1.3rem;
 }
-#closebtn{
+
+#closebtn {
   border: solid 1px black;
   height: 30px;
   text-align: center;
 }
-.up-arrow{
+
+.up-arrow {
   height: 30px;
 }
+
 /* index styles */
 #menu {
   margin: 10px;
@@ -116,31 +129,32 @@ padding-left: 0;
   padding: 0;
 }
 
-.cart-col ol{
+.cart-col ol {
   padding-left: 0;
   list-style-type: none;
 }
 
-.cart-col h5{
+.cart-col h5 {
   margin-bottom: 0;
   margin-top: 3px;
   font-weight: 400;
   font-size: 1.3rem
 }
 
-.plus-minus-container{
+.plus-minus-container {
   position: relative;
-      float: right;
-      bottom: 2px;
+  float: right;
+  bottom: 2px;
 }
 
 .cart-container {
-padding: 10px;
+  padding: 10px;
 }
 
-.cart-item{
+.cart-item {
   padding-bottom: 20px;
 }
+
 .menu-section {
   border: solid 1px #ed6663;
   border-radius: 10px;
@@ -192,7 +206,7 @@ padding: 10px;
   margin-right: 20px;
 }
 
-.pizza-description{
+.pizza-description {
   font-style: italic;
   line-height: 1.5;
 }
@@ -201,13 +215,14 @@ padding: 10px;
   padding-top: 10px;
 }
 
-.quantity{
+.quantity {
   font-size: 1.2rem;
 }
 
-#cart-total{
-font-size: 1.5rem;
+#cart-total {
+  font-size: 1.5rem;
 }
+
 /* buttons */
 #menu button:focus {
   outline: none;
@@ -262,16 +277,16 @@ font-size: 1.5rem;
 
 .plus-minus-btn {
   border-radius: 50%;
-  height:25px;
-  width:25px;
+  height: 25px;
+  width: 25px;
   font-size: 0.8rem;
   background-color: #75daad;
   color: white;
   margin: 0 10px;
 }
 
-.checkout-btn{
-  width:100%;
+.checkout-btn {
+  width: 100%;
   border-radius: 10px;
   margin: 3px;
   background-color: #ed6663;
@@ -279,25 +294,24 @@ font-size: 1.5rem;
   font-size: 1.4rem;
 }
 
-.checkout-btn:disabled{
+.checkout-btn:disabled {
   background-color: lightgrey;
 }
 
-
 /* checkout styles */
-#checkout-cart{
-margin:50px 50px 0 50px;
+#checkout-cart {
+  margin: 50px 50px 0 50px;
   border: solid 1px black;
   border-radius: 10px;
   font-size: 1.5rem;
   font-weight: 400;
 }
 
-#checkout-cart h1{
+#checkout-cart h1 {
   text-align: center;
 }
 
-#checkout-total{
+#checkout-total {
   margin-right: 50px;
   text-align: right;
   padding: 20px;
@@ -305,68 +319,80 @@ margin:50px 50px 0 50px;
   font-weight: 500;
 }
 
-#checkout-total::before{
-  content:'Total:';
+#checkout-total::before {
+  content: 'Total:';
   font-size: 1.2rem;
 }
 
-#checkout-btns{
+#checkout-btns {
   margin: 20px 50px;
 }
 
-#checkout-btns .order{
-float: right;
-border-radius: 10px;
-font-size: 1.3rem;
-padding: 5px 10px;
-background-color: #75daad;
-color: white;
-
+#checkout-btns .order {
+  float: right;
+  border-radius: 10px;
+  font-size: 1.3rem;
+  padding: 5px 10px;
+  background-color: #75daad;
+  color: white;
 }
 
-#checkout-btns .edit{
-border-radius: 10px;
-font-size: 1.3rem;
-padding: 5px 10px;
-background-color: #ed6663;
-color: white;
+#checkout-btns .edit {
+  border-radius: 10px;
+  font-size: 1.3rem;
+  padding: 5px 10px;
+  background-color: #ed6663;
+  color: white;
 }
 
-#checkout-btns form{
+#checkout-btns form {
   display: inline;
 }
 
-.checkout-cart-item{
-padding:20px;
-border-radius: 10px;
-border-bottom: solid 1px black;
+.checkout-cart-item {
+  padding: 20px;
+  border-radius: 10px;
+  border-bottom: solid 1px black;
 }
-.cart-item-total{
+
+.cart-item-total {
   float: right;
 }
 
+.empty-cart {
+  text-align: center;
+  font-weight: 300;
+}
+
 /* admin/view_orders styles */
-table{
+table {
   margin: 20px 0;
 }
-thead{
+
+thead {
   text-align: center;
 }
-tbody{
+
+tbody {
   font-size: 1.2rem;
 }
-tr{
+
+tr {
   border-bottom: solid 1px;
 }
 
-.centre{
+.centre {
   text-align: center;
 }
 
-
 /* login / register styles */
-.login-register-box{
-  margin: 0 auto 10px auto;
+.login-register-container {
+  display: flex;
+  height: calc(100% - 90px);
+}
+
+.login-register-box {
+  margin: auto;
   border: solid 1px #75daad;
   border-radius: 10px;
   text-align: center;
@@ -374,7 +400,7 @@ tr{
   width: fit-content;
 }
 
-.login-register-box input{
+.login-register-box input {
   display: block;
   margin-bottom: 30px;
   width: 300px;
@@ -384,18 +410,18 @@ tr{
   text-align: center;
 }
 
-.login-register-box h1{
+.login-register-box h1 {
   margin-bottom: 30px;
-
 }
 
-.login-register-box input:focus{
+.login-register-box input:focus {
   border-bottom: solid 3px #75daad;
   outline: none;
 }
 
-.login-register-box button{
-  width:100%;
+.login-register-box button {
+  display: block;
+  width: 300px;
   border-radius: 10px;
   margin: 3px;
   background-color: #ed6663;
@@ -403,47 +429,48 @@ tr{
   font-size: 1.4rem;
 }
 
-
 /* My orders styles */
-.my-orders h1{
+.my-orders h1 {
   text-align: center;
 }
 
 /* Order confirmation styles */
-.order-confirmation{
+.order-confirmation {
   margin: 50px;
 }
 
 @media (max-width: 1060px) {
-  #reg .food-picture{
+  #reg .food-picture {
     display: block;
     margin: 0 auto;
     float: none;
   }
 
-  #sic .food-picture{
+  #sic .food-picture {
     display: block;
     margin: 0 auto;
     float: none;
   }
 
-  #reg .food-info{
+  #reg .food-info {
     border-left: inherit;
     display: block;
     width: 100%;
     padding-left: 0;
   }
-  #sic .food-info{
+
+  #sic .food-info {
     border-left: inherit;
     display: block;
     width: 100%;
     padding-left: 0;
   }
-  #reg .food-info h3{
+
+  #reg .food-info h3 {
     text-align: center;
   }
 
-  #sic .food-info h3{
+  #sic .food-info h3 {
     text-align: center;
   }
 
@@ -457,82 +484,101 @@ tr{
     margin: 0 auto;
   }
 
-  .plus-minus-btn{
-
-    height:23px;
-    width:23px;
+  .plus-minus-btn {
+    height: 23px;
+    width: 23px;
     font-size: 0.75rem;
     margin: 0 5px;
   }
 
-  .my-orders td{
+  .my-orders td {
     font-size: 1rem;
   }
 }
 
 @media (max-width: 991px) {
-#shopping-cart{
-  display: inline-block;
-}
-.cart-col{
-  display: none;
-}
-.navbar{
-    width: 100%;
+  #shopping-cart {
+    display: inline-block;
+  }
+
+  .cart-col {
+    display: none;
+  }
+
+  nav {
+    display: block;
     position: fixed;
     top: 0;
     left: 0;
+    width: 100%;
     z-index: 50;
   }
 
-  .nav-left{
-  position: static;
-  }
-  .nav-right{
-  position: static;
-  right: 0;
+  .home, .nav-right {
+    display: none;
+    text-align: center;
   }
 
-  .container-fluid{
+  .home {
+    order: 2;
+  }
+
+  .logo {
+    display: flex;
+    order: 1;
+    height: 90px;
+  }
+
+  .logo h1 {
+    margin: auto;
+  }
+
+  .navbar-toggler {
+    display: block;
+    position: absolute;
+    top: 25px;
+  }
+
+  .nav-left {
+    position: static;
+  }
+
+  .nav-right {
+    position: static;
+    right: 0;
+  }
+
+  .container-fluid {
     /* Need padding top since navbar is fixed and out of the flow of the document */
-    padding-top: 100px;
+    padding-top: 120px;
   }
 
-nav  .logo{
-
+  nav a {
+    display: block;
   }
 
-nav a{
-  display: block;
-}
-
-.navlink{
-  padding: 5px 15px;
-}
-
-.menu-section h3{
-  font-size: 1.75rem;
-}
-
-.my-orders table{
-  text-align: center;
-}
-.expandable:hover{
-      background-color: rgba(0,0,0,.075);
-}
-
-}
-
-@media (max-width: 780px){
-
-  .container-fluid{
-    /* Need padding top since navbar is fixed and out of the flow of the document */
-    padding-top: 100px;
+  .navlink {
+    padding: 5px 15px;
   }
 
+  .menu-section h3 {
+    font-size: 1.75rem;
+  }
+
+  .my-orders table {
+    text-align: center;
+  }
+
+  .expandable:hover {
+    background-color: rgba(0, 0, 0, .075);
+  }
+}
+
+@media (max-width: 780px) {
   .addcartbtn, .pricebtn, .topping, .extra {
     font-size: 1rem;
   }
+
   .food-info {
     /* - the width of .food-picture including padding */
     width: calc(100% - 130px);
@@ -543,42 +589,44 @@ nav a{
     width: 100px;
   }
 
-  .menu-section li{
-padding: 10px;
+  .menu-section li {
+    padding: 10px;
   }
-
 }
 
-  @media (max-width: 680px){
-    .addcartbtn, .pricebtn, .topping, .extra {
-      font-size: 0.8rem;
-    }
-
-    .menu-section h3{
-      font-size: 1.5rem;
-    }
-
+@media (max-width: 680px) {
+  .addcartbtn, .pricebtn, .topping, .extra {
+    font-size: 0.8rem;
   }
 
-@media (max-width: 532px){
-  #shopping-cart{
+  .menu-section h3 {
+    font-size: 1.5rem;
+  }
+}
+
+@media (max-width: 532px) {
+  #shopping-cart {
     height: 30px
   }
-  .navbar-toggler{
+
+  .navbar-toggler {
     height: 25px;
-    left:10px;
+    left: 10px;
   }
-  .logo h1{
+
+  .logo h1 {
     font-size: 2.2rem;
   }
-  .navbar-toggler{
+
+  .navbar-toggler {
     top: 13px;
   }
 
-  .pizza-description{
+  .pizza-description {
     font-size: 0.8rem;
   }
-  .menu-section h3{
+
+  .menu-section h3 {
     font-size: 1.3rem;
   }
 
@@ -592,17 +640,49 @@ padding: 10px;
     width: 90px;
   }
 
-  #checkout-cart{
-  margin: 0;
+  #checkout-cart {
+    margin: 0;
   }
 
-  #checkout-btns{
+  #checkout-btns {
     margin: 20px 10px;
   }
 }
 
-@media (max-width: 400px){
-  .addcartbtn{
+@media (max-width: 400px) {
+  .login-register-box input {
+    width: 250px;
+  }
+
+  .login-register-box button {
+    width: 250px;
+  }
+
+  .addcartbtn {
     float: none;
+  }
+
+  .food-picture {
+    float: none;
+    margin: 0 auto;
+    display: block;
+  }
+
+  .food-info {
+    display: block;
+    width: 100%;
+    border-left: none;
+    margin: 0 auto;
+    text-align: center;
+    padding: 0;
+  }
+
+  .menu-section h3:after {
+    content: "";
+    display: block;
+    margin: 0 auto;
+    width: 80%;
+    border-bottom: solid 1px black;
+    padding: 10px 0;
   }
 }
