@@ -1,4 +1,4 @@
-# Project 3 - Pizza delivery website
+# Pizza delivery website - Django
 A fully responsively and interactively designed pizza takeaway website .
 
 "/" - index page - contains the menu and shopping cart. On page load all menu items are passed to the client and save in a javascript array of dicts containing the information for each menu item. For each menu item size can be selected by clicking the size buttons.  For pizzas toppings can be selected by clicking on buttons with the topping names and extras can be added to subs. Item size must be selected before the item can be added to the cart. Upon adding an item to the cart, item information is retrieved from the array of dicts and rendered on the page. The user can edit the quantity of items in the cart by clicking +/- buttons and the item will be automatically removed if the quantity is 0. Checkout button is disabled if cart is empty and if user is not logged in and clicks checkout they will be redirected to the log in page then redirected to the checkout after logging in. If the user navigates away from the page and comes back later their cart contents are saved in a session variable.
