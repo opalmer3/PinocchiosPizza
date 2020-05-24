@@ -87,10 +87,9 @@ function selectTopping() {
 // GET prices of pizzas and update them
 function pizzaPriceUpdate(sectionid, pizzaId) {
   // iterate through list of pizza menu items and extract the corresponding prices
-  console.log(sectionid);
-  if (sectionid == 'reg') {
+  if (sectionid === 'reg') {
     for (var i of regularPizzas) {
-      if (i.id == pizzaId) {
+      if (i.id === pizzaId) {
         // Change button text to show updated price
         $('#regsmallbtn').text('Small $ ' + i.smallPrice.toFixed(2));
         $('#reglargebtn').text('Large $ ' + i.largePrice.toFixed(2));
@@ -146,8 +145,8 @@ function selectExtra() {
     currPriceSmall += 0.50 * counter;
     currPriceLarge += 0.50 * counter;
 
-    $('#' + 'subs' + subid + ' .sml').text('Small $ ' + currPriceSmall.toFixed(2));
-    $('#' + 'subs' + subid + ' .lrg').text('Large $ ' + currPriceLarge.toFixed(2));
+    $('#' + 'subs' + subid + " button[data-size='Small']").text('Small $ ' + currPriceSmall.toFixed(2));
+    $('#' + 'subs' + subid + " button[data-size='Large']").text('Large $ ' + currPriceLarge.toFixed(2));
   } else {
     $(this).attr('data-selected', "false");
     $(this).toggleClass('extra-selected');
@@ -167,8 +166,8 @@ function selectExtra() {
     currPriceSmall += 0.50 * counter;
     currPriceLarge += 0.50 * counter;
 
-    $('#' + 'subs' + subid + ' .sml').text('Small $ ' + currPriceSmall.toFixed(2));
-    $('#' + 'subs' + subid + ' .lrg').text('Large $ ' + currPriceLarge.toFixed(2));
+    $('#' + 'subs' + subid + " button[data-size='Small']").text('Small $ ' + currPriceSmall.toFixed(2));
+    $('#' + 'subs' + subid + " button[data-size='Large']").text('Large $ ' + currPriceLarge.toFixed(2));
   }
 
 }

@@ -9,6 +9,9 @@ if ($('.home').attr('data-visibility') === 'hidden'){
 else{
   $('.home').attr('data-visibility', "hidden");
   // Remove style attribute so if user goes back to large screen size the links are still visibility
-  $('.home, .nav-right').removeAttr('style');
+  $('.home, .nav-right').slideUp();
+  setTimeout(function(){
+    $('.home, .nav-right').removeAttr('style');
+  }, 500);
 }
 });

@@ -2,6 +2,9 @@ html, body {
   height: 100%;
   font-family: 'Roboto', sans-serif;
 }
+body{
+  margin-bottom: 20px;
+}
 
 .container-fluid {
   padding-top: 20px;
@@ -16,32 +19,31 @@ button {
 nav {
   background-color: #75daad;
   color: white;
-  display: flex;
   padding: 0 5%;
-}
-
-.home, .nav-right, .logo {
-  flex: 1;
-  margin: auto;
+  position: relative;
 }
 
 .home {
-  order: 1;
+  position: absolute;
+  top: 30%;
+  left: 0;
 }
 
 .nav-right {
-  order: 3;
-  text-align: right;
+  position: absolute;
+  top: 30%;
+  right: 0;
 }
 
 .logo {
-  order: 2;
   text-align: center;
+  padding: 10px 0;
 }
 
 .logo h1 {
   font-family: 'Viaoda Libre', cursive;
   font-size: 3.5rem;
+  margin: 0;
 }
 
 .navbar-toggler {
@@ -50,15 +52,13 @@ nav {
 
 .navbar-toggler-icon {
   background-image: url(/static/orders/menu.svg);
+  height: 30px;
+  width: 30px;
+  position: absolute;
 }
 
 .navbar-toggler-icon:focus {
   outline-color: white;
-}
-
-.cart-toggler-icon {
-  background-image: url(/static/orders/shopping-cart.svg);
-  height: 50px;
 }
 
 .navlink {
@@ -76,10 +76,15 @@ nav {
 
 #shopping-cart {
   display: none;
-  position: absolute;
-  top: 20px;
-  right: 3%;
-  height: 50px;
+  margin: auto 5% auto 0;
+  border: 1px solid darkgreen;
+  border-radius: 50%;
+  padding: 10px;
+}
+
+.shopping-cart-img {
+  height: 30px;
+  width: 30px;
 }
 
 #collapsable-cart-content {
@@ -209,6 +214,8 @@ nav {
 .pizza-description {
   font-style: italic;
   line-height: 1.5;
+  font-size: 1.2rem;
+  font-weight: 300;
 }
 
 .price {
@@ -235,6 +242,7 @@ nav {
   color: white;
   margin: 3px;
   font-size: 1.2rem;
+  padding: 8px;
 }
 
 .addcartbtnclicked {
@@ -248,6 +256,7 @@ nav {
   background-color: white;
   color: black;
   font-size: 1.2rem;
+  padding: 8px;
 }
 
 .selected {
@@ -263,6 +272,7 @@ nav {
 .topping, .extra {
   border-radius: 10px;
   margin: 3px;
+  font-size: 1.2rem;
   background-color: white;
   color: #ed6663;
   border: solid #ed6663 2px;
@@ -436,7 +446,7 @@ tr {
 
 /* Order confirmation styles */
 .order-confirmation {
-  margin: 50px;
+  margin: 50px 5%;
 }
 
 @media (max-width: 1060px) {
@@ -494,11 +504,15 @@ tr {
   .my-orders td {
     font-size: 1rem;
   }
+  .my-orders td[colspan='4']:not(h3) {
+    text-align: left;
+  }
 }
 
 @media (max-width: 991px) {
   #shopping-cart {
     display: inline-block;
+    order: 3;
   }
 
   .cart-col {
@@ -506,12 +520,20 @@ tr {
   }
 
   nav {
-    display: block;
     position: fixed;
+    display: flex;
     top: 0;
     left: 0;
+    padding: 0;
     width: 100%;
     z-index: 50;
+  }
+
+  .collapsable-nav-links {
+    position: absolute;
+    top: 100%;
+    width: 100%;
+    background: inherit;
   }
 
   .home, .nav-right {
@@ -520,12 +542,12 @@ tr {
   }
 
   .home {
-    order: 2;
+    position: static;
   }
 
   .logo {
     display: flex;
-    order: 1;
+    flex: 1;
     height: 90px;
   }
 
@@ -534,9 +556,12 @@ tr {
   }
 
   .navbar-toggler {
-    display: block;
-    position: absolute;
-    top: 25px;
+    display: inline-block;
+    flex: 0 0 30px;
+    margin: auto 0;
+    height: 30px;
+    width: 30px;
+    padding-left: 5%;
   }
 
   .nav-left {
@@ -575,10 +600,6 @@ tr {
 }
 
 @media (max-width: 780px) {
-  .addcartbtn, .pricebtn, .topping, .extra {
-    font-size: 1rem;
-  }
-
   .food-info {
     /* - the width of .food-picture including padding */
     width: calc(100% - 130px);
@@ -595,57 +616,46 @@ tr {
 }
 
 @media (max-width: 680px) {
-  .addcartbtn, .pricebtn, .topping, .extra {
-    font-size: 0.8rem;
-  }
-
   .menu-section h3 {
     font-size: 1.5rem;
   }
 }
 
 @media (max-width: 532px) {
-  #shopping-cart {
-    height: 30px
+
+  .menu-section h3:after {
+    content: "";
+    display: block;
+    margin: 0 auto;
+    width: 80%;
+    border-bottom: solid 1px black;
+    padding: 10px 0;
   }
 
-  .navbar-toggler {
-    height: 25px;
-    left: 10px;
-  }
 
-  .logo h1 {
-    font-size: 2.2rem;
-  }
+    .food-picture {
+      float: none;
+      margin: 0 auto;
+      display: block;
+    }
 
-  .navbar-toggler {
-    top: 13px;
-  }
-
-  .pizza-description {
-    font-size: 0.8rem;
-  }
-
-  .menu-section h3 {
-    font-size: 1.3rem;
-  }
-
-  .food-info {
-    /* - the width of .food-picture including padding */
-    width: calc(100% - 120px);
-    min-height: 90px;
-  }
-
-  .food-picture {
-    width: 90px;
-  }
-
+    .food-info {
+      display: block;
+      width: 100%;
+      border-left: none;
+      margin: 0 auto;
+      text-align: center;
+      padding: 0;
+    }
+    .addcartbtn {
+      float: none;
+    }
   #checkout-cart {
     margin: 0;
   }
 
   #checkout-btns {
-    margin: 20px 10px;
+    margin: 20px 5px;
   }
 }
 
@@ -658,31 +668,7 @@ tr {
     width: 250px;
   }
 
-  .addcartbtn {
-    float: none;
-  }
-
-  .food-picture {
-    float: none;
-    margin: 0 auto;
-    display: block;
-  }
-
-  .food-info {
-    display: block;
-    width: 100%;
-    border-left: none;
-    margin: 0 auto;
-    text-align: center;
-    padding: 0;
-  }
-
-  .menu-section h3:after {
-    content: "";
-    display: block;
-    margin: 0 auto;
-    width: 80%;
-    border-bottom: solid 1px black;
-    padding: 10px 0;
+  .logo h1{
+    font-size: 2.5rem;
   }
 }

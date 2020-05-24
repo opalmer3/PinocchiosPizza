@@ -18,31 +18,34 @@
 <body>
   <nav>
 
-
+    <div class="navbar-toggler">
+      <span class="navbar-toggler-icon"></span>
+    </div>
     <div class="logo">
-      <button class="navbar-toggler">
-        <span class="navbar-toggler-icon"></span>
-      </button>
       <h1>Pinocchio's</h1>
     </div>
 
-    <div class="home" data-visibility="hidden">
-      <a class="navlink nav-left" href="{% url 'index' %}">Home</a>
+    <div class="collapsable-nav-links">
+      <div class="home" data-visibility="hidden">
+        <a class="navlink nav-left" href="{% url 'index' %}">Home</a>
+      </div>
+      <div class="nav-right">
+        {% if user.is_authenticated %}
+        <a class="navlink" href="/my_orders">My orders</a>
+        <a class="navlink" href="/logout">Log Out</a>
+        {% else %}
+        <a class="navlink" href="{% url 'login'%}">Log In</a>
+        <a class="navlink" href="{% url 'register' %}">Register</a>
+        {% endif %}
+      </div>  
     </div>
 
-    <div class="nav-right">
-      {% if user.is_authenticated %}
-      <a class="navlink" href="/my_orders">My orders</a>
-      <a class="navlink" href="/logout">Log Out</a>
-      {% else %}
-
-      <a class="navlink" href="{% url 'login'%}">Log In</a>
-      <a class="navlink" href="{% url 'register' %}">Register</a>
-      {% endif %}
-    </div>
 
     {% if index %}
-    <img id='shopping-cart' src="{% static 'orders/shopping-cart.svg'%}" alt="Cart">
+    <div id='shopping-cart'>
+      <img  class="shopping-cart-img" src="{% static 'orders/shopping-cart.svg'%}" alt="Cart">
+    </div>
+
     {% endif %}
   </nav>
   <!-- collapsable shopping cart -->

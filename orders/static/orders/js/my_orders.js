@@ -1,5 +1,7 @@
 // get screen width
 var width = window.innerWidth;
+// variable for if the table is in larger or smaller format
+var status = 'larger';
 
 // on smaller screens call resize smaller
 if (width < 992){
@@ -13,8 +15,8 @@ window.addEventListener('resize', resizeSmaller);
 function resizeSmaller(){
   // Get screen width
   var width = window.innerWidth;
-
-  if (width < 992){
+  console.log(status);
+  if (width < 992 && status === 'larger'){
     // Select 3rd col of each table body row containing ordered items
     $('tbody tr td:nth-child(3)').each(function(){
       // create new tr that spans full width of table
@@ -47,6 +49,9 @@ function resizeSmaller(){
 
     // Add event listener on row click`
     $('.expandable').on('click', showRow);
+
+    // set table format status to smaller
+    status = 'smaller';
 
     //Switch event listeners
     window.removeEventListener('resize', resizeSmaller);
@@ -87,6 +92,8 @@ function resizeLarger(){
   // Remove expanded tr
   $('.expanded').remove();
 
+  // set table format status to larger
+  status = 'larger';
   // Switch event listeners
   window.removeEventListener('resize', resizeLarger);
   window.addEventListener('resize', resizeSmaller);
