@@ -2,9 +2,6 @@ html, body {
   height: 100%;
   font-family: 'Roboto', sans-serif;
 }
-body{
-  margin-bottom: 20px;
-}
 
 .container-fluid {
   padding-top: 20px;
@@ -127,6 +124,7 @@ nav {
 /* index styles */
 #menu {
   margin: 10px;
+  padding-bottom: 20px;
 }
 
 .cart-col {
@@ -336,6 +334,7 @@ nav {
 
 #checkout-btns {
   margin: 20px 50px;
+  padding-bottom: 20px;
 }
 
 #checkout-btns .order {
@@ -399,6 +398,7 @@ tr {
 .login-register-container {
   display: flex;
   height: calc(100% - 90px);
+  padding-bottom: 40px;
 }
 
 .login-register-box {
@@ -440,6 +440,9 @@ tr {
 }
 
 /* My orders styles */
+.my-orders{
+  padding-bottom: 20px;
+}
 .my-orders h1 {
   text-align: center;
 }
@@ -559,7 +562,7 @@ tr {
     display: inline-block;
     flex: 0 0 30px;
     margin: auto 0;
-    height: 30px;
+    height: 40px;
     width: 30px;
     padding-left: 5%;
   }
@@ -648,6 +651,8 @@ tr {
       padding: 0;
     }
     .addcartbtn {
+      display: block;
+      margin: 0 auto;
       float: none;
     }
   #checkout-cart {
@@ -670,5 +675,9 @@ tr {
 
   .logo h1{
     font-size: 2.5rem;
+  }
+
+  .pricebtn{
+    font-size: 1.1rem;
   }
 }
