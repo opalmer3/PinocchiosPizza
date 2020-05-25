@@ -652,8 +652,9 @@ tr {
     }
     .addcartbtn {
       display: block;
-      margin: 0 auto;
+      margin: 5px auto;
       float: none;
+
     }
   #checkout-cart {
     margin: 0;
