@@ -1,60 +1,70 @@
 html, body {
   height: 100%;
-  font-family: 'Roboto', sans-serif;
+  font-family: 'Open Sans', sans-serif;
 }
 
 .container-fluid {
   padding-top: 20px;
   height: 100%;
+  max-width: 1440px;
 }
 
-button {
-  font-family: 'Gobu', sans-serif;
+button, input {
   font-weight: 300;
+  border: 1px solid;
+}
+h1, h2, h3{
+  font-family: 'Yanone Kaffeesatz', sans-serif;
+}
+a{
+  font-family: 'Yanone Kaffeesatz', sans-serif;
 }
 
 nav {
   background-color: #75daad;
   color: white;
-  padding: 0 5%;
+  display: flex;
+  padding: 10px 25px;
   position: relative;
 }
 
-.home {
-  position: absolute;
-  top: 30%;
-  left: 0;
+.collapsable-nav-links {
+  flex: 1;
+  text-align: right;
+  align-self: center;
 }
 
-.nav-right {
-  position: absolute;
-  top: 30%;
-  right: 0;
+.home{
+  display: none;
 }
 
 .logo {
   text-align: center;
   padding: 10px 0;
+  flex: 0;
 }
 
-.logo h1 {
-  font-family: 'Viaoda Libre', cursive;
-  font-size: 3.5rem;
-  margin: 0;
+.logo a {
+  font-family: 'Dancing Script', cursive;
+  color: inherit;
+  font-size: 2.5rem;
+}
+.logo a:hover {
+text-decoration: none;
 }
 
-.navbar-toggler {
+.nav-toggler {
   display: none;
+  margin: auto 20px auto 0;
 }
 
-.navbar-toggler-icon {
+.nav-toggler-icon {
   background-image: url(/static/orders/menu.svg);
-  height: 30px;
-  width: 30px;
-  position: absolute;
+  height: 25px;
+  width: 25px;
 }
 
-.navbar-toggler-icon:focus {
+.nav-toggler-icon:focus {
   outline-color: white;
 }
 
@@ -62,8 +72,9 @@ nav {
   color: white;
   font-size: 1.5rem;
   font-weight: 300;
-  padding: 20px;
+  padding: 20px 0 20px 20px;
   text-decoration: none;
+  text-transform: uppercase;
 }
 
 .navlink:hover {
@@ -73,7 +84,7 @@ nav {
 
 #shopping-cart {
   display: none;
-  margin: auto 5% auto 0;
+  margin: auto 0 auto auto;
   border: 1px solid darkgreen;
   border-radius: 50%;
   padding: 10px;
@@ -166,6 +177,7 @@ nav {
 
 .menu-section ul {
   padding-left: 20px;
+  margin-bottom: 0;
 }
 
 .menu-section li {
@@ -181,7 +193,7 @@ nav {
 }
 
 .menu-section h3 {
-  font-size: 2rem;
+  font-size: 1.75rem;
   font-weight: 300;
 }
 
@@ -212,7 +224,7 @@ nav {
 .pizza-description {
   font-style: italic;
   line-height: 1.5;
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   font-weight: 300;
 }
 
@@ -340,7 +352,7 @@ nav {
 #checkout-btns .order {
   float: right;
   border-radius: 10px;
-  font-size: 1.3rem;
+  font-size: 1.2rem;
   padding: 5px 10px;
   background-color: #75daad;
   color: white;
@@ -348,7 +360,7 @@ nav {
 
 #checkout-btns .edit {
   border-radius: 10px;
-  font-size: 1.3rem;
+  font-size: 1.2rem;
   padding: 5px 10px;
   background-color: #ed6663;
   color: white;
@@ -515,7 +527,6 @@ tr {
 @media (max-width: 991px) {
   #shopping-cart {
     display: inline-block;
-    order: 3;
   }
 
   .cart-col {
@@ -524,65 +535,42 @@ tr {
 
   nav {
     position: fixed;
-    display: flex;
-    top: 0;
-    left: 0;
-    padding: 0;
     width: 100%;
+    display: block;
     z-index: 50;
   }
-
-  .collapsable-nav-links {
-    position: absolute;
-    top: 100%;
-    width: 100%;
-    background: inherit;
-  }
-
-  .home, .nav-right {
-    display: none;
-    text-align: center;
-  }
-
-  .home {
-    position: static;
-  }
-
-  .logo {
+  .nav-top-mobile{
     display: flex;
-    flex: 1;
-    height: 90px;
+    position: relative;
   }
-
-  .logo h1 {
-    margin: auto;
-  }
-
-  .navbar-toggler {
+  .nav-toggler{
     display: inline-block;
-    flex: 0 0 30px;
-    margin: auto 0;
-    height: 40px;
-    width: 30px;
-    padding-left: 5%;
+  }
+  .logo{
+    position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   }
 
-  .nav-left {
-    position: static;
+  .home{
+    display: block;
   }
 
-  .nav-right {
-    position: static;
-    right: 0;
+  .collapsable-nav-links{
+    display: block;
+    text-align: center;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s linear;
+  }
+  .collapsable-nav-links a{
+    display: block;
   }
 
   .container-fluid {
     /* Need padding top since navbar is fixed and out of the flow of the document */
     padding-top: 120px;
-  }
-
-  nav a {
-    display: block;
   }
 
   .navlink {
@@ -635,10 +623,13 @@ tr {
     padding: 10px 0;
   }
 
+  .menu-section li{
+    margin: 0;
+  }
 
     .food-picture {
       float: none;
-      margin: 0 auto;
+      margin: 0 auto 20px auto;
       display: block;
     }
 
@@ -666,6 +657,9 @@ tr {
 }
 
 @media (max-width: 400px) {
+  nav{
+    padding: 10px;
+  }
   .login-register-box input {
     width: 250px;
   }
@@ -674,11 +668,11 @@ tr {
     width: 250px;
   }
 
-  .logo h1{
-    font-size: 2.5rem;
+  .pricebtn, .topping{
+    font-size: 1rem;
   }
 
-  .pricebtn{
-    font-size: 1.1rem;
+  #menu{
+    margin: 0;
   }
 }

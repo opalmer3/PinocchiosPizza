@@ -1,17 +1,14 @@
 //jshint esversion:6
 // show / hide collapsable navbar menu
-$('.navbar-toggler').on('click', ()=>{
+$('.nav-toggler').on('click', ()=>{
 
-if ($('.home').attr('data-visibility') === 'hidden'){
-  $('.home, .nav-right').slideDown();
-  $('.home').attr('data-visibility', "showing");
+if ($('.collapsable-nav-links').attr('data-visibility') === 'hidden'){
+  $('.collapsable-nav-links').css('max-height', '200px');
+  $('.collapsable-nav-links').attr('data-visibility', "showing");
 }
 else{
-  $('.home').attr('data-visibility', "hidden");
+  $('.collapsable-nav-links').attr('data-visibility', "hidden");
   // Remove style attribute so if user goes back to large screen size the links are still visibility
-  $('.home, .nav-right').slideUp();
-  setTimeout(function(){
-    $('.home, .nav-right').removeAttr('style');
-  }, 500);
+    $('.collapsable-nav-links').removeAttr('style');
 }
 });
